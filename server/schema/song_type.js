@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
-const graphql = require('graphql');
-const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLList } = graphql;
-const LyricType = require('./lyric_type');
-const Song = mongoose.model('song');
+const mongoose = require('mongoose')
+const graphql = require('graphql')
+const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLList } = graphql
+const LyricType = require('./lyric_type')
+const Song = mongoose.model('song')
 
 const SongType = new GraphQLObjectType({
   name:  'SongType',
@@ -12,10 +12,10 @@ const SongType = new GraphQLObjectType({
     lyrics: {
       type: new GraphQLList(LyricType),
       resolve(parentValue) {
-        return Song.findLyrics(parentValue.id);
+        return Song.findLyrics(parentValue.id)
       }
     }
   })
-});
+})
 
-module.exports = SongType;
+module.exports = SongType

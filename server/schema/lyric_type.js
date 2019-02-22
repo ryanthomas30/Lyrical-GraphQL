@@ -1,13 +1,13 @@
-const mongoose = require('mongoose');
-const graphql = require('graphql');
+const mongoose = require('mongoose')
+const graphql = require('graphql')
 const {
   GraphQLObjectType,
   GraphQLList,
   GraphQLID,
   GraphQLInt,
   GraphQLString
-} = graphql;
-const Lyric = mongoose.model('lyric');
+} = graphql
+const Lyric = mongoose.model('lyric')
 
 const LyricType = new GraphQLObjectType({
   name:  'LyricType',
@@ -22,10 +22,10 @@ const LyricType = new GraphQLObjectType({
           .then(lyric => {
             console.log(lyric)
             return lyric.song
-          });
+          })
       }
     }
   })
-});
+})
 
-module.exports = LyricType;
+module.exports = LyricType
