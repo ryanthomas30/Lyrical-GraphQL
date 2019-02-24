@@ -1,12 +1,13 @@
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+import webpack from 'webpack'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
 
-module.exports = {
-  entry: './client/index.js',
+export default {
+  entry: ['@babel/polyfill', './client/index.js'],
   output: {
     path: '/',
     filename: 'bundle.js'
   },
+  mode: 'development',
   module: {
     rules: [
       {
@@ -25,4 +26,4 @@ module.exports = {
       template: 'client/index.html'
     })
   ]
-};
+}
