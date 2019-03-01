@@ -94,9 +94,6 @@ class FlexBox extends Component {
 
 		/* Delete undefined fields */
 		Object.keys(finalStyling).forEach(key => finalStyling[key] === undefined || finalStyling[key] === '' && delete finalStyling[key])
-		if (!!full) {
-			console.log('finalStyling:', finalStyling)
-		}
 
 		return (
 			<div style={finalStyling} {...other} >

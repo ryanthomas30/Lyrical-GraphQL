@@ -9,12 +9,22 @@ import { fetchSongs } from '../queries/songs'
 
 class SongList extends Component {
 
+	onSongDelete = async (id) => {
+	const { mutate, data } = this.props
+	await mutate({
+		variables: { id }
+	})
+	data.refetch()
+	}
+
 	renderSongs = () => {
 		const { songs, loading } = this.props.data
 		if (loading) return null
+		console.log('songs:', songs)
 		return songs.map((song, i) => (
-			<FlexBox key={i} full='horizontal' direction='row' align='center' padding='medium' className='list__item' >
+			<FlexBox key={i} full='horizontal' direction='row' align='center' justify='between' padding='medium' className='list__item' >
 				{song.title}
+				<i className='material-icons' onClick={() => this.onSongDelete(song.id)} >delete</i>
 			</FlexBox>
 		))
 	}
@@ -42,4 +52,14 @@ class SongList extends Component {
 	}
 }
 
-export default graphql(fetchSongs)(SongList)
+const mutation = gql`
+	mutation DeleteSong($id: ID) {
+		deleteSong(id: $id) {
+			id
+		}
+	}
+`
+
+export default graphql(mutation)(
+	graphql(fetchSongs)(SongList)
+)
