@@ -13,4 +13,6 @@
 
 .material-icons {
 	cursor: pointer;
+	color: #727272;
+	user-select: none;
 }

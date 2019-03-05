@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
-import { Link } from 'react-router'
+import { Link, hashHistory } from 'react-router'
 
 import FlexBox from './FlexBox'
 
@@ -9,12 +9,17 @@ import { fetchSongs } from '../queries/songs'
 
 class SongList extends Component {
 
-	onSongDelete = async (id) => {
-	const { mutate, data } = this.props
-	await mutate({
-		variables: { id }
-	})
-	data.refetch()
+	_onSongDelete = async (id) => {
+		e.preventDefault()
+		const { mutate, data } = this.props
+		await mutate({
+			variables: { id }
+		})
+		data.refetch()
+	}
+
+	_onSongClick = (songId) => {
+		hashHistory.push(`/songs/${songId}`)
 	}
 
 	renderSongs = () => {
@@ -24,7 +29,10 @@ class SongList extends Component {
 		return songs.map((song, i) => (
 			<FlexBox key={i} full='horizontal' direction='row' align='center' justify='between' padding='medium' className='list__item' >
 				{song.title}
-				<i className='material-icons' onClick={() => this.onSongDelete(song.id)} >delete</i>
+				<FlexBox direction='row' align='center' justify='between' >
+					<i style={{ marginRight: '2rem' }} className='material-icons' onClick={() => this._onSongClick(song.id)} >edit</i>
+					<i className='material-icons' onClick={() => this._onSongDelete(song.id)} >delete</i>
+				</FlexBox>
 			</FlexBox>
 		))
 	}
@@ -33,9 +41,11 @@ class SongList extends Component {
 		console.log('this.props:', this.props)
 		const { data } = this.props
 		if (data.loading) {
-			<FlexBox align='center' justify='center' >
-				Loading
-			</FlexBox>
+			return(
+				<FlexBox align='center' justify='center' >
+					Loading...
+				</FlexBox>
+			)
 		}
 		return (
 			<FlexBox full='horizontal' align='end' >
